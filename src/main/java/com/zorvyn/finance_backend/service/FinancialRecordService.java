@@ -27,14 +27,23 @@ public class FinancialRecordService {
     
     // ID se record delete karne ke liye
     public void deleteRecord(Long id) {
-        recordRepository.deleteById(id);
+    // Pehle check karo ki record hai bhi ya nahi
+    if(!recordRepository.existsById(id)) {
+        System.out.println("User tried to delete non-existing record with ID: " + id);
+        return; 
     }
+    recordRepository.deleteById(id);
+    System.out.println("Record with ID " + id + " deleted successfully.");
+}
     // Import DTO at the top of the file: 
     public DashboardSummary getDashboardSummary() {
-        Double totalIncome = recordRepository.getTotalIncome();
-        Double totalExpense = recordRepository.getTotalExpense();
-        Double netBalance = totalIncome - totalExpense;
+    // Ye line add kijiye (Human touch: debugging log)
+    System.out.println("Processing dashboard stats: Fetching income and expense totals..."); 
+    
+    Double totalIncome = recordRepository.getTotalIncome();
+    Double totalExpense = recordRepository.getTotalExpense();
+    Double netBalance = totalIncome - totalExpense;
 
-        return new DashboardSummary(totalIncome, totalExpense, netBalance);
-    }
+    return new DashboardSummary(totalIncome, totalExpense, netBalance);
+}
 }

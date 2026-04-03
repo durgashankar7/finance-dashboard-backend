@@ -22,10 +22,12 @@ public class UserController {
 
     // Naya user banane ka endpoint (POST request)
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User savedUser = userService.createUser(user);
-        return ResponseEntity.ok(savedUser);
-    }
+public ResponseEntity<User> registerUser(@RequestBody User user) {
+    // handle user registration flow
+    System.out.println("Registering new user: " + user.getEmail()); 
+    User savedUser = userService.createUser(user);
+    return ResponseEntity.ok(savedUser);
+}
 
     // Saare users ki list dekhne ka endpoint (GET request)
     @GetMapping
